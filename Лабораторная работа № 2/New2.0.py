@@ -4,7 +4,7 @@ def read_file(name : any):
     ''' Функция считывания данных из файла '''
     with open(name, 'r') as file: 
         f = file.readlines()  
-        N, K, L = map(int, f[0].strip().split()) 
+        N, L, K = map(int, f[0].strip().split()) 
         G = [f[i].strip().split() for i in range(1, K+1)] 
     return N, L, G, K 
 
