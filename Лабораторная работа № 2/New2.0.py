@@ -13,14 +13,14 @@ def figure(G:list[int]):
     U = [] 
     E = [] 
     for i in G:
-        U.append((int(i[0]), int(i[1])))
-        U.append((int(i[0])-1, int(i[1])))
-        U.append((int(i[0])+1, int(i[1])))
-        U.append((int(i[0])+1, int(i[1])-2))
-        U.append((int(i[0])-1, int(i[1])-2))
-        U.append((int(i[0])-1, int(i[1])+2))
-        U.append((int(i[0])+1, int(i[1])+2))
-        E.append((int(i[0]), int(i[1])))
+        U.append((int(i[1]), int(i[0])))
+        U.append((int(i[1])-1, int(i[0])))
+        U.append((int(i[1])+1, int(i[0])))
+        U.append((int(i[1])+1, int(i[0])-2))
+        U.append((int(i[1])-1, int(i[0])-2))
+        U.append((int(i[1])-1, int(i[0])+2))
+        U.append((int(i[1])+1, int(i[0])+2))
+        E.append((int(i[1]), int(i[0])))
     return U, E
 
 def another(U: list[int]): 
@@ -38,7 +38,7 @@ def another(U: list[int]):
 
 def step(N : int): 
     ''' Функция всех клеток шахматной доски '''
-    H = [(x, y) for x in range(N) for y in range(N)] 
+    H = [(y, x) for y in range(N) for x in range(N)] 
     return set(H) 
 
 def right(H: set[int], U: list[int]): 
@@ -60,14 +60,13 @@ def write(name1: any, L: int, H1: set[int], E: list[int]):
                     for j in range(len(i)): 
                         if (int(i[j][0])-1, int(i[j][1])) in i: z.append((int(i[j][0])-1, int(i[j][1])))
                         if (int(i[j][0])+1, int(i[j][1])) in i: z.append((int(i[j][0])+1, int(i[j][1])))
-                        if (int(i[j][0])+1, int(i[j][1])) in i: z.append((int(i[j][0])+1, int(i[j][1])))
                         if (int(i[j][0])+1, int(i[j][1])-2) in i: z.append((int(i[j][0])+1, int(i[j][1])-2))
                         if (int(i[j][0])-1, int(i[j][1])-2) in i: z.append((int(i[j][0])-1, int(i[j][1])-2))
                         if (int(i[j][0])-1, int(i[j][1])+2) in i: z.append((int(i[j][0])-1, int(i[j][1])+2))
                         if (int(i[j][0])+1, int(i[j][1])+2) in i: z.append((int(i[j][0])+1, int(i[j][1])+2))
                     if len(list(set(i) - set(z))) == L:
                         for p in E: 
-                            ko.write(str(p) + ' ')
+                            ko.write(str(p[::-1]) + ' ')
                         for p1 in list(set(i) - set(z)):
                             ko.write(str(p1) + ' ')
                         ko.write('\n') 
@@ -77,8 +76,8 @@ def write(name1: any, L: int, H1: set[int], E: list[int]):
 
 def board(N: int, U3: set[int], E: list[int]):
     ''' Функция вывода шахматной доски в консоль '''
-    d = [[(x, y) for x in range(N)] for y in range(N)]
-    for i in reversed(d): 
+    d = [[(y, x) for y in range(N)] for x in range(N)]
+    for i in d: 
         h = [] 
         for j in i: 
             if j in E: 
@@ -87,7 +86,6 @@ def board(N: int, U3: set[int], E: list[int]):
                 h.append('*')
             else: 
                 h.append('0') 
-        h = (str(h).ljust(20)) 
         print(*[i for i in h if i in '0*#'])
 
 def main(): 
