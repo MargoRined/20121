@@ -1,10 +1,10 @@
 import itertools 
-def read(name1): 
+def read(name1: int): 
     ''' Функция для считывания данных из файла '''
     with open(name1, 'r') as file: 
         a = file.readline().strip().split() 
     return a 
-def deal(a): 
+def deal(a: int): 
     ''' Функция для формирования комбинций цифр и знаков и проверки суммы '''
     O = itertools.product([i for i in a[1:-1]], ['+', '-'], repeat = len([i for i in a[1:-1]])) 
     V = [i[:-1] for i in O if list(i[::2]) == a[1:-1]] 
