@@ -49,6 +49,7 @@ def right(H: set[int], U: list[int]):
 def write(name1: any, L: int, H1: set[int], E: list[int]): 
     ''' Функция для записи координат в файл '''
     B = [] 
+    A = []
     N1 = itertools.combinations(H1, L) 
     for i in N1:
         B.append(i) 
@@ -64,6 +65,7 @@ def write(name1: any, L: int, H1: set[int], E: list[int]):
                         if (int(i[j][0])-1, int(i[j][1])-2) in i: z.append((int(i[j][0])-1, int(i[j][1])-2))
                         if (int(i[j][0])-1, int(i[j][1])+2) in i: z.append((int(i[j][0])-1, int(i[j][1])+2))
                         if (int(i[j][0])+1, int(i[j][1])+2) in i: z.append((int(i[j][0])+1, int(i[j][1])+2))
+                    A.append((set(i) - set(z)))
                     if len(list(set(i) - set(z))) == L:
                         for p in E: 
                             ko.write(str(p[::-1]) + ' ')
@@ -72,17 +74,28 @@ def write(name1: any, L: int, H1: set[int], E: list[int]):
                         ko.write('\n') 
                     break
         else: 
-            ko.write('No solution')         
+            ko.write('No solution') 
+    return A     
 
-def board(N: int, U3: set[int], E: list[int]):
+def board(N: int, U3: set[int], E: list[int], A: list[int]):
     ''' Функция вывода шахматной доски в консоль '''
     d = [[(y, x) for y in range(N)] for x in range(N)]
+    W = []
+    W1 = []
+    for j in A[0]:
+        W1.append((j[0], j[1]))
+        W.append((int(j[0]) - 1, int(j[1])))
+        W.append((int(j[0]) + 1, int(j[1])))
+        W.append((int(j[0]) + 1, int(j[1]) - 2))
+        W.append((int(j[0]) - 1, int(j[1]) - 2))
+        W.append((int(j[0]) - 1, int(j[1]) + 2))
+        W.append((int(j[0]) + 1, int(j[1]) + 2))
     for i in d: 
         h = [] 
         for j in i: 
-            if j in E: 
+            if (j in E) or (j in W1): 
                 h.append('#') 
-            elif j in U3: 
+            elif (j in U3) or (j in W): 
                 h.append('*')
             else: 
                 h.append('0') 
@@ -95,9 +108,9 @@ def main():
     H = step(N) 
     H1 = right(H, U) 
     U3 = another(U)
-    board(N, U3, E) 
-    write('2.txt', L, H1, E) 
-
+    A = write('2.txt', L, H1, E)
+    board(N, U3, E, A) 
+     
 if __name__ == '__main__': 
     ''' Приводим в действие самую главную функцию '''
     main() 
