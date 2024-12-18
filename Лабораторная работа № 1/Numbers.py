@@ -1,33 +1,18 @@
-import itertools 
-def read(name1: int): 
-    ''' Функция для считывания данных из файла '''
-    with open(name1, 'r') as file: 
-        a = file.readline().strip().split() 
-    return a 
-def deal(a: int): 
-    ''' Функция для формирования комбинций цифр и знаков и проверки суммы '''
-    O = itertools.product([i for i in a[1:-1]], ['+', '-'], repeat = len([i for i in a[1:-1]])) 
-    V = [i[:-1] for i in O if list(i[::2]) == a[1:-1]] 
-    h = [] 
-    for i in V: 
-        p = 0
-        p += int(i[0]) 
-        for j in range(len(i)-1): 
-            if i[j] == '-': 
-                p -= int(i[j+1]) 
-            elif i[j] == '+': 
-                p += int(i[j+1]) 
-        h.append([p, i]) 
-        p == 0 
-    h1 = [k[1] for k in h if str(k[0]) == str(a[-1])]
-    if len(h1) > 0:
-        print(*h1.pop(), '=', a[-1])
+def deal(n: list, s: int, p: int, h: str, i: int):
+    ''' Функция для + или - чисел, чтобы проверить равна ли их сумма-разность заданному финальному числу'''
+    if i == len(n):
+        if p == a[-1]:
+            return h[:-1]
+        else:
+            return None
+    x = deal(n, s, p + n[i], str(h) + '+' + str(n[i]), i + 1)
+    y = deal(n, s, p - n[i], str(h) + '-' + str(n[i]), i + 1)
+    return x or y
+with open("1.txt", "r") as file:
+    a = list(map(int, file.read().split()))
+g = deal(a[1:-1], a[-1], 0, '', 0)
+with open("2.txt", "w") as file:
+    if g:
+        file.write(str(g[3:]) + '=' + str(a[-1]))
     else:
-        print('No solution')
-def main(): 
-    ''' Функция для работы со всеми функциями '''
-    a = read('1.txt') 
-    deal(a) 
-if __name__ == '__main__': 
-    ''' Запуск главной функции '''
-    main() 
+        file.write("no solution")
