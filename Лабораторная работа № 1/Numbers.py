@@ -1,4 +1,4 @@
-def deal(n, s, p = 0, h = "", i = 0):
+def deal(n: list, s: int, p: int = 0, h: str = "", i: int = 0):
     ''' Функция для + или - чисел, чтобы проверить равна ли их сумма-разность заданному финальному числу '''
     if i == len(n):
         if p == s:
@@ -9,9 +9,11 @@ def deal(n, s, p = 0, h = "", i = 0):
     y = deal(n, s, p - n[i], f"{h} - {n[i]} ", i + 1)
     return x or y
 with open("1.txt", "r") as file:
+    ''' Считываем данные из файла '''
     a = list(map(int, file.read().split()))
 g = deal(a[1:-1], a[-1])
 with open("2.txt", "w") as file:
+    ''' Записываем полученное выражение в файл или No solution '''
     if g is not None:
         file.write(f"{g[3:]} = {a[-1]}")
     else:
