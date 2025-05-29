@@ -155,4 +155,5 @@ class Chess(object):
 if __name__ == '__main__':
     N, L, K = Chess.good_bad_koordinats
     Chess.solutions()
+    Chess.koordinats_giving()
     Chess.W, Chess.W2, Chess.W1, Chess.W2_2 = Chess.table_koord
